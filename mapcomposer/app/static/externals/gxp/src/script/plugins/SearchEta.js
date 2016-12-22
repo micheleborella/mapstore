@@ -97,7 +97,7 @@ gxp.plugins.SearchEta = Ext.extend(gxp.plugins.Tool, {
 								var layer;
 								var start = Ext.getCmp("daBox").getValue();
 								var end = Ext.getCmp("aBox").getValue();
-  							   /* layer = apptarget.mapPanel.map.getLayersByName(this.layerName)[0];
+  							    layer = apptarget.mapPanel.map.getLayersByName(this.layerName)[0];
 								if (! layer) 
 								{
 									return;
@@ -108,7 +108,7 @@ gxp.plugins.SearchEta = Ext.extend(gxp.plugins.Tool, {
 								};
 							   
 							   
-							   layer.mergeNewParams(params);*/
+							   layer.mergeNewParams(params);
 							   
 							   var index = apptarget.mapPanel.layers.findExact('name', this.layerWs + ':' + this.layerName);
 							   apptarget.mapPanel.layers.getAt(index).getLayer().vendorParams = params;
