@@ -5,7 +5,7 @@
    "gsSources":{ 
 		"bolzano": {
 			"ptype": "gxp_wmssource",
-			"url": "http://sit.comune.bolzano.it/geoserver/ows",
+			"url": "http://geoserv02:8080/geoserver/ows",
 			"title": "Bolzano GeoServer",
 			"SRS": "EPSG:900913",
 			"version":"1.1.1",
@@ -238,7 +238,7 @@
 				"scaleMethod": "accurate"
 			},
 			"ignoreLayers": "Google Hybrid,Bing Aerial,Google Terrain,Google Roadmap,Marker,GeoRefMarker",
-			"printService":"http://sit.comune.bolzano.it/geoserver/pdf/",
+			"printService":"http://geoserv02:8080/geoserver/pdf/",
 			"addGraticuleControl": false,
 			"addLandscapeControl": true,
 			"appendLegendOptions": true,
@@ -267,14 +267,14 @@
 			"outputTarget": "searchpanel",
 			"serviceUrl": "http://sit.comune.bolzano.it/GeoInfo/",
 			"selectionProperties": {
-				"wmsURL": "http://sit.comune.bolzano.it/geoserver/ows",
+				"wmsURL": "http://geoserv02:8080/geoserver/ows",
 				"selectionLayerTitle": "Selection Layer"
 			}
 		}, {
 			"ptype": "gxp_searcheta",
 			"outputTarget": "searchpanel",
 			"layerName": "view_eta_civ",
-			"layerWs": "Cartografia"			
+			"layerWs": "Cartografia"	
 		}, {
 			"ptype": "gxp_addlayer",
 			"showCapabilitiesGrid": false,
@@ -335,7 +335,7 @@
 		        "geocoder":{
 		            "xtype": "gxp_spatial_geocoding_selector",
 		            "multipleSelection": false,
-		            "wfsBaseURL": "http://sit.comune.bolzano.it/geoserver/wfs?",
+		            "wfsBaseURL": "http://geoserv02:8080/geoserver/wfs?",
 		            "geocoderTypeName": "Slot:civici_buffer_300",
 		            "geocoderTypeRecordModel":[
 		                {
@@ -369,7 +369,7 @@
 			"maximized": true,
 			"layers": [
 				{
-					"wmsserver": "http://sit.comune.bolzano.it/geoserver/Cartografia/wms",
+					"wmsserver": "http://geoserv02:8080/geoserver/Cartografia/wms",
 					"title": "Confine_comunale",
 					"parameters":{
 						"layers": "Cartografia:Confine_comunale"
@@ -378,7 +378,7 @@
 						"isBaseLayer": true
 					}
 				}, {
-					"wmsserver":"http://sit.comune.bolzano.it/geoserver/Ambiente/wms",
+					"wmsserver":"http://geoserv02:8080/geoserver/Ambiente/wms",
 					"title":"Quartieri",
 					"parameters":{
 						"transparent": true,
@@ -388,7 +388,7 @@
 						"isBaseLayer": false
 					}
 				}, {
-					"wmsserver":"http://sit.comune.bolzano.it/geoserver/Cartografia/wms",
+					"wmsserver":"http://geoserv02:8080/geoserver/Cartografia/wms",
 					"title":"Ferrovia",
 					"parameters":{
 						"transparent": true,
@@ -398,7 +398,7 @@
 						"isBaseLayer": false
 					}
 				}, {
-					"wmsserver":"http://sit.comune.bolzano.it/geoserver/Cartografia/wms",
+					"wmsserver":"http://geoserv02:8080/geoserver/Cartografia/wms",
 					"title":"Autostrada",
 					"parameters":{
 						"transparent": true,

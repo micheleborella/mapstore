@@ -248,11 +248,12 @@ function zoomCatasto(particella, comCat, tipoPart, serviceUrl, selectionProperti
 				mask.hide();
 				var obj = Ext.decode(response.responseText);
 				var bounds = obj.bounds;
-				var comProjection = new OpenLayers.Projection("EPSG:25832"); 
-				var googleProjection = new OpenLayers.Projection("EPSG:900913");
+				//var comProjection = new OpenLayers.Projection("EPSG:25832"); 
+				//var googleProjection = new OpenLayers.Projection("EPSG:900913");
 				
 				var comBounds = new OpenLayers.Bounds(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
-				var newBounds = comBounds.transform(comProjection, googleProjection);
+				//var newBounds = comBounds.transform(comProjection, googleProjection);
+				var newBounds = comBounds;
 				
 				//
 				// Add the WMS layer
@@ -264,7 +265,7 @@ function zoomCatasto(particella, comCat, tipoPart, serviceUrl, selectionProperti
 					var layer = apptarget.mapPanel.map.getLayersByName(selectionProperties.selectionLayerTitle)[0];
 					if(!layer){
 						var customParams = {
-							cql_filter: "NUM='" + particella +"' AND COM=" + comCat,
+							cql_filter: "COM = " + comCat + " AND (NUM = '" + particella +"' OR DSUP_SOTTO = '" + particella +"')",
 							styles: 'highlight_polygon',
 							displayInLayerSwitcher: false,
 							enableLang: false
@@ -282,7 +283,7 @@ function zoomCatasto(particella, comCat, tipoPart, serviceUrl, selectionProperti
 						layer = apptarget.mapPanel.map.getLayersByName(selectionProperties.selectionLayerTitle)[0];
 					} //else{ 	Nota: a seguito di alcune modifiche, bisogna riassegnare il cql_filter
 						layer.mergeNewParams({
-							"cql_filter": "NUM='" + particella +"' AND COM=" + comCat,
+							"cql_filter": "COM = " + comCat + " AND (NUM = '" + particella +"' OR DSUP_SOTTO = '" + particella +"')",
 							"layers": selectionLayerName,
 							"styles": 'highlight_polygon'
 						});
@@ -321,11 +322,11 @@ function getParticellaExtent(particella, comCat, tipoPart, serviceUrl, selection
 				mask.hide();
 				var obj = Ext.decode(response.responseText);
 				var bounds = obj.bounds;
-				var comProjection = new OpenLayers.Projection("EPSG:25832"); 
-				var googleProjection = new OpenLayers.Projection("EPSG:900913");
+				//var comProjection = new OpenLayers.Projection("EPSG:25832"); 
+				//var googleProjection = new OpenLayers.Projection("EPSG:900913");
 				
 				var comBounds = new OpenLayers.Bounds(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
-				var newBounds = comBounds.transform(comProjection, googleProjection);
+				var newBounds = comBounds;
 				
 				//
 				// Add the WMS layer
@@ -337,7 +338,7 @@ function getParticellaExtent(particella, comCat, tipoPart, serviceUrl, selection
 					var layer = apptarget.mapPanel.map.getLayersByName(selectionProperties.selectionLayerTitle)[0];
 					if(!layer){
 						var customParams = {
-							cql_filter: "NUM='" + particella +"' AND COM=" + comCat,
+							cql_filter: "COM = " + comCat + " AND (NUM = '" + particella +"' OR DSUP_SOTTO = '" + particella +"')",							
 							styles: 'highlight_polygon',
 							displayInLayerSwitcher: false,
 							enableLang: false
@@ -353,7 +354,7 @@ function getParticellaExtent(particella, comCat, tipoPart, serviceUrl, selection
 						addLayer.addLayer(opts);
 					}else{
 						layer.mergeNewParams({
-							"cql_filter": "NUM='" + particella +"' AND COM=" + comCat,
+							"cql_filter": "COM = " + comCat + " AND (NUM = '" + particella +"' OR DSUP_SOTTO = '" + particella +"')",
 							"layers": selectionLayerName,
 							"styles": 'highlight_polygon'
 						});

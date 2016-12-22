@@ -102,6 +102,7 @@ gxp.plugins.HelpButton = Ext.extend(gxp.plugins.Tool, {
      *  ``String`` Html to show in the window
      */
     description: '<h2> Help window</h2><p>This is a sample help window</p>',
+	descriptionDe: "",
     dontShowThisMessageAgainText: "Don't show this message again",
     
     // width and height are not configurable at the moment
@@ -213,6 +214,15 @@ gxp.plugins.HelpButton = Ext.extend(gxp.plugins.Tool, {
             return;
         }
 		
+		
+		var code = GeoExt.Lang.locale || this.target.defaultLanguage;
+		var aDesc;
+		if (code == "it") {
+			aDesc = this.description;
+		} else if (code == "de") {
+			aDesc = this.descriptionDe;
+		}
+		
         new Ext.Window(Ext.apply({
             layout:'fit',
             //iconCls:this.iconCls,
@@ -220,7 +230,7 @@ gxp.plugins.HelpButton = Ext.extend(gxp.plugins.Tool, {
             border:false,
             autoScroll:false,
             maximizable:true,
-            items: this.fileDocURL ? iframeconfig : {html: this.description, autoScroll:true, bodyStyle:'padding:10px'},
+            items: this.fileDocURL ? iframeconfig : {html: aDesc, autoScroll:true, bodyStyle:'padding:10px'},
             bbar:[{
                 xtype: 'checkbox',
                 boxLabel: this.dontShowThisMessageAgainText,

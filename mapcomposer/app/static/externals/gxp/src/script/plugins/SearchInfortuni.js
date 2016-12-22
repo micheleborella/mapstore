@@ -108,6 +108,11 @@ gxp.plugins.SearchInfortuni = Ext.extend(gxp.plugins.Tool, {
 							name: 'rbAmm',
 							inputValue: '2015',
 							checked: true
+						}, {
+							boxLabel: '2016',
+							name: 'rbAmm',
+							inputValue: '2016',
+							checked: true
 						}],
 						listeners: {
 							change: function(field, newValue, oldValue, eOpts){
@@ -222,7 +227,11 @@ gxp.plugins.SearchInfortuni = Ext.extend(gxp.plugins.Tool, {
 			
 		   var infortuniLayer;
 		   if (!layer) {
-		   	   infortuniLayer = apptarget.mapPanel.map.getLayersByName(layerName)[0];
+		   	  // infortuniLayer = apptarget.mapPanel.map.getLayersByName(layerName)[0];
+			  var infortuni_layer_index;
+			   if((infortuni_layer_index = apptarget.mapPanel.layers.find('name', me.infortuniLayerWs + ':' + layerName)) > -1){
+					 infortuniLayer = apptarget.mapPanel.layers.getAt(infortuni_layer_index).get('layer');
+			   }
 		   } else {
 			   infortuniLayer = layer;
 		   }

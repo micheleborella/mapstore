@@ -1,3 +1,169 @@
+.x-tree-node-collapsed  .gx-tree-spo-icon
+{
+    background-image: url(img/geosilk/servizi/sport_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-spo-icon
+{
+    background-image: url(img/geosilk/servizi/sport_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-spo-icon
+{
+    background-image: url(img/geosilk/servizi/sport_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-soc-icon
+{
+    background-image: url(img/geosilk/servizi/sociali_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-soc-icon
+{
+    background-image: url(img/geosilk/servizi/sociali_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-soc-icon
+{
+    background-image: url(img/geosilk/servizi/sociali_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-med-icon
+{
+    background-image: url(img/geosilk/servizi/servizi_info_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-med-icon
+{
+    background-image: url(img/geosilk/servizi/servizi_info_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-med-icon
+{
+    background-image: url(img/geosilk/servizi/servizi_info_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-san-icon
+{
+    background-image: url(img/geosilk/servizi/sanita_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-san-icon
+{
+    background-image: url(img/geosilk/servizi/sanita_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-san-icon
+{
+    background-image: url(img/geosilk/servizi/sanita_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-ist-icon
+{
+    background-image: url(img/geosilk/servizi/istruzione_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-ist-icon
+{
+    background-image: url(img/geosilk/servizi/istruzione_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-ist-icon
+{
+    background-image: url(img/geosilk/servizi/istruzione_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-giu-icon
+{
+    background-image: url(img/geosilk/servizi/giustizia_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-giu-icon
+{
+    background-image: url(img/geosilk/servizi/giustizia_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-giu-icon
+{
+    background-image: url(img/geosilk/servizi/giustizia_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-fin-icon
+{
+    background-image: url(img/geosilk/servizi/finanziari_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-fin-icon
+{
+    background-image: url(img/geosilk/servizi/finanziari_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-fin-icon
+{
+    background-image: url(img/geosilk/servizi/finanziari_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-chi-icon
+{
+    background-image: url(img/geosilk/servizi/chiese_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-chi-icon
+{
+    background-image: url(img/geosilk/servizi/chiese_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-chi-icon
+{
+    background-image: url(img/geosilk/servizi/chiese_grigio.png);
+}
+
+
+.x-tree-node-collapsed  .gx-tree-cul-icon
+{
+    background-image: url(img/geosilk/servizi/cultura_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-cul-icon
+{
+    background-image: url(img/geosilk/servizi/cultura_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-cul-icon
+{
+    background-image: url(img/geosilk/servizi/cultura_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-amm-icon
+{
+    background-image: url(img/geosilk/servizi/amministrazione_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-amm-icon
+{
+    background-image: url(img/geosilk/servizi/amministrazione_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-amm-icon
+{
+    background-image: url(img/geosilk/servizi/amministrazione_grigio.png);
+}
+
+.x-tree-node-collapsed  .gx-tree-sic-icon
+{
+    background-image: url(img/geosilk/servizi/sicurezza_grigio.png);
+}
+
+.x-tree-node-expanded .gx-tree-sic-icon
+{
+    background-image: url(img/geosilk/servizi/sicurezza_grigio.png);
+}
+
+.x-tree-node-leaf .gx-tree-sic-icon
+{
+    background-image: url(img/geosilk/servizi/sicurezza_grigio.png);
+}
+
 .x-tree-node-leaf  .gx-tree-layer-icon {
     background-image: url(img/geosilk/vector.png);
 }

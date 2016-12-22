@@ -32,7 +32,8 @@ gxp.plugins.SearchInfortuniStrade = Ext.extend(gxp.plugins.Tool, {
 	viaToolTip: 'Per esempio per Via Roma digitare "Roma"',
 		
 	infortuniLayerName: 'view_incidenti',
-	infortuniLayerCopyName: 'view_incidenti_copy',
+	infortuniLayerCopyName: 'view_incidenti_prod',
+	infortuniStradaLayerName: 'view_str_inc',
 	infortuniLayerWs: 'Cartografia',	
 	
 	constructor: function(config) {
@@ -195,7 +196,11 @@ gxp.plugins.SearchInfortuniStrade = Ext.extend(gxp.plugins.Tool, {
 			
 		   var infortuniLayer;
 		   if (!layer) {
-		   	   infortuniLayer = apptarget.mapPanel.map.getLayersByName('view_str_inc')[0];
+		   	   //infortuniLayer = apptarget.mapPanel.map.getLayersByName('view_str_inc')[0];
+			   var infortuni_layer_index;
+			   if((infortuni_layer_index = apptarget.mapPanel.layers.find('name', me.infortuniLayerWs + ':' + me.infortuniStradaLayerName)) > -1){
+					 infortuniLayer = apptarget.mapPanel.layers.getAt(infortuni_layer_index).get('layer');
+			   }
 		   } else {
 			   infortuniLayer = layer;
 		   }
@@ -259,7 +264,7 @@ gxp.plugins.SearchInfortuniStrade = Ext.extend(gxp.plugins.Tool, {
 		   
 		   infortuniLayer.mergeNewParams(params);
 		   
-		   var index = apptarget.mapPanel.layers.findExact('name', 'Cartografia:view_str_inc');
+		   var index = apptarget.mapPanel.layers.findExact('name', me.infortuniLayerWs + ':' + me.infortuniStradaLayerName);
 		   apptarget.mapPanel.layers.getAt(index).getLayer().vendorParams = params;
 		   apptarget.mapPanel.layers.getAt(index).getLayer().mergeNewParams(params);		  
 		   
@@ -291,7 +296,11 @@ gxp.plugins.SearchInfortuniStrade = Ext.extend(gxp.plugins.Tool, {
 			
 		   var infortuniLayer;
 		   if (!layer) {
-		   	   infortuniLayer = apptarget.mapPanel.map.getLayersByName(layerName)[0];
+		   	  // infortuniLayer = apptarget.mapPanel.map.getLayersByName(layerName)[0];
+			  var infortuni_layer_index;
+			   if((infortuni_layer_index = apptarget.mapPanel.layers.find('name', me.infortuniLayerWs + ':' + layerName)) > -1){
+					 infortuniLayer = apptarget.mapPanel.layers.getAt(infortuni_layer_index).get('layer');
+			   }
 		   } else {
 			   infortuniLayer = layer;
 		   }
@@ -369,7 +378,7 @@ gxp.plugins.SearchInfortuniStrade = Ext.extend(gxp.plugins.Tool, {
 			}
 			if (e.layer.params && e.layer.params.LAYERS ==  me.infortuniLayerWs + ':' + me.infortuniLayerCopyName){
 				aggiornaInfortuni(me.infortuniLayerCopyName, e.layer);
-			}
+			}						
 		});				
 		
 		var panel = gxp.plugins.SearchInfortuniStrade.superclass.addOutput.call(this, serviziForm);

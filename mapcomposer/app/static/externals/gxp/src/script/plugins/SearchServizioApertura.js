@@ -23,14 +23,94 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
     /** api: ptype = gxp_addgroup */
     ptype: "gxp_searchservizioapertura",
 	
+	selectionProperties: null,
 	serviceUrl: null,
 	vieLang: "it",
 	viaText: "Via",
 	viaEmpty: 'Inserisci via',
-	selectionProperties: null,
+	
 	
 	viaToolTip: 'Per esempio per Via Roma digitare "Roma"',
-		
+	
+	
+	ricApSerTxt: "Ricerca Apertura Servizi",
+	selTuttoTxt: "Seleziona Tutto",
+	desTuttoTxt: "Deseleziona Tutto",
+	filTipoTxt: "Filtra per tipologia:",
+	amminTxt: "Amministrativo",
+	comuTxt: "Comunali",
+	provTxt: "Provinciali",
+	statTxt: "Statali",
+	acqRifTxt: "Acqua, rifiuti, elettricità",
+	prevTxt: "Previdenza ed assistenza",
+	traspTxt: "Trasporti e mobilità",
+	turiTxt: "Turismo ed economia",
+	altroTxt: "Altro",
+	sicuTxt: "Sicurezza",
+	forzTxt: "Forze dell'ordine",
+	vigiTxt: "Vigili del fuoco",
+	eserTxt: "Esercito",
+	protTxt: "Protezione civile e soccorso alpino",
+	sanTxt: "Sanità",
+	ospTxt: "Ospedale, cliniche, ambulatori",
+	prontTxt: "Pronto Intervento",
+	farmTxt: "Farmacie",
+	socTxt: "Sociale",
+	anzTxt: "Anziani",
+	donnTxt: "Donne e pari opportunità",
+	famTxt: "Famiglie e minori",
+	giovTxt: "Giovani",
+	disTxt: "Disabilità e disagio psichico",
+	dipTxt: "Dipendenze",
+	sviluTxt: "Sviluppo di comunità ed inclusione sociale",
+	patrTxt: "Patronati",
+	clutTxt: "Cultura",
+	biblTxt: "Biblioteche",
+	saleTxt: "Sale conferenze",
+	cineTxt: "Cinema",
+	musTxt: "Musei e sedi espositive",
+	teaTxt: "Teatri ed auditorium",
+	assCTxt: "Associazioni culturali",
+	istrTxt: "Istruzione",
+	scInTxt: "Scuole per l'infanzia",
+	scPrTxt: "Scuole primarie",
+	scSeTxt: "Scuole secondarie inferiori",
+	scSsTxt: "Scuole secondarie superiori",
+	cforTxt: "Centri di formazione",
+	uniTxt: "Università, struttore di ricerca e/o parauniversitarie",
+	spoTxt: "Sport",
+	indTxt: "Impianti in-door",
+	pisTxt: "Piscine",
+	outdTxt: "Impianti out-door",
+	giusTxt: "Giustizia",
+	medTxt: "Media",
+	tvTxt: "Tv, Radio",
+	giorTxt: "Giornali, riviste",
+	onlTxt: "Online",
+	finTxt: "Finanze e poste",
+	banTxt: "Banche",
+	uffPTxt: "Uffici postali",
+	chieseTxt: "Chiese",
+	
+	filOrTxt: "Filtra per orario e data:",
+	daTxt: "Da",
+	aTxt: "A",
+	orDaTxt: "Orario da",
+	orATxt: "Orario a",
+	dataTxt: "Data",
+	filParChTxt: "Filtra per parola chiave:",
+	chiaText: "Chiave",
+	inPacText: "Inserisci parola chiave",
+	filLuoTxt: "Filtra per luogo:",
+	quarTxt: "Quartiere",
+	aggiTxt: "Aggiorna",
+
+	tuttiTxt: "-TUTTI-",
+	donbTxt: "DON BOSCO",
+	eurnoTxt: "EUROPA NOVACELLA",
+	ceprTxt: "CENTRO P. RENCIO",
+	griTxt: "GRIES S.QUIRINO",
+	oltrTxt: "OLTRISARCO ASLAGO",		
 		
 	constructor: function(config) {
         gxp.plugins.SearchServizioApertura.superclass.constructor.apply(this, arguments);
@@ -101,12 +181,12 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 			   {name: 'descrizione', type: 'string'}
 			],
 			data: [
-			    ['TT', '0', '-TUTTI-'],
-				['DB', '4', 'DON BOSCO'],
-				['EU', '3', 'EUROPA NOVACELLA'],
-				['CP', '1', 'CENTRO P. RENCIO'],
-				['GR', '5', 'GRIES S.QUIRINO'],
-				['OL', '2', 'OLTRISARCO ASLAGO']
+			    ['TT', '0', this.tuttiTxt],
+				['DB', '4', this.donbTxt],
+				['EU', '3', this.eurnoTxt],
+				['CP', '1', this.ceprTxt],
+				['GR', '5', this.griTxt],
+				['OL', '2', this.oltrTxt]
 			]
 		});
 		
@@ -191,25 +271,31 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 						}
 				   ]
 			};*/
-	
+		
+		var checkFlag = false;
 		
 		var serviziForm = new Ext.form.FormPanel({
 			header: true,
 			border: true,
-			title: 'Ricerca Apertura Servizi',
+			title: this.ricApSerTxt,
 			labelWidth: 80,
 			bodyStyle:'padding:5px 5px 0', 
 			tbar:[				   
 						{
 							xtype: 'button',
 							id: 'ckBtn',
-							text: 'Seleziona tutto',
+							text: this.selTuttoTxt,
 							iconCls: 'icon-addlayers',
 							width: 50,
 							handler: function(){
-								Ext.getCmp('serviziCheck').items.each(function(oEl) {
+								/*Ext.getCmp('serviziCheck').items.each(function(oEl) {
 									oEl.setValue(true);
-								});
+								});*/
+								var nodes = Ext.getCmp('serviziTree').getRootNode().childNodes;
+								var i;
+								for (i = 0; i < nodes.length; i++) { 
+								   nodes[i].ui.toggleCheck(true);
+								}
 							}
 						},
 						//verLine,
@@ -217,21 +303,422 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 						{
 							xtype: 'button',
 							id: 'unckBtn',
-							text: 'Deseleziona tutto',
+							text: this.desTuttoTxt,
 							iconCls: 'icon-removelayers',
 							width: 50,
 							handler: function(){
-								Ext.getCmp('serviziCheck').items.each(function(oEl) {
+								/*Ext.getCmp('serviziCheck').items.each(function(oEl) {
 									oEl.setValue(false);
-								});
+								});*/
+								var nodes = Ext.getCmp('serviziTree').getRootNode().childNodes;
+								var i;
+								for (i = 0; i < nodes.length; i++) { 
+								   nodes[i].ui.toggleCheck(false);
+								}
 							}
 						}
 		    ],			
 			items: [
-				//formPanel,
+				//formPanel,				
 				{
 					xtype: "fieldset",
-					items:[{
+					title: this.filTipoTxt,
+					items:[
+					{
+						xtype:'treepanel',  
+						id:'serviziTree', 						
+						//title: "Tipologia:",
+						height:300, 
+						autoScroll:true, 																   
+						root:{
+							expanded: true,
+							children: [{
+								text: this.amminTxt,
+								checked: true,
+								iconCls : 'gx-tree-amm-icon',
+								children : [{
+										text: this.comuTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '010102',
+										leaf : true										
+									}, {
+										text: this.provTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '010103',
+										leaf : true
+									}, {
+										text: this.statTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '010105',
+										leaf : true
+									}, {
+										text: this.acqRifTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '010201',
+										leaf : true
+									}, {
+										text: this.prevTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '010202',
+										leaf : true
+									}, {
+										text: this.traspTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '010203',
+										leaf : true
+									}, {
+										text: this.turiTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '010204',
+										leaf : true
+									}, {
+										text: this.altroTxt,
+										checked: true,
+										iconCls : 'gx-tree-amm-icon',
+										id: '01',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.sicuTxt,
+								checked: true,
+								iconCls : 'gx-tree-sic-icon',
+								children : [{
+										text: this.forzTxt,
+										checked: true,
+										iconCls : 'gx-tree-sic-icon',
+										id: '0301',
+										leaf : true
+									}, {
+										text: this.vigiTxt,
+										checked: true,
+										iconCls : 'gx-tree-sic-icon',
+										id: '0308',
+										leaf : true
+									}, {
+										text: this.eserTxt,
+										checked: true,
+										iconCls : 'gx-tree-sic-icon',
+										id: '0302',
+										leaf : true
+									}, {
+										text: this.protTxt,
+										checked: true,
+										iconCls : 'gx-tree-sic-icon',
+										id: '0306',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.sanTxt,
+								checked: true,
+								iconCls : 'gx-tree-san-icon',
+								children : [{
+										text: this.ospTxt,
+										checked: true,
+										iconCls : 'gx-tree-san-icon',
+										id: '0702',
+										leaf : true
+									}, {
+										text: this.prontTxt,
+										checked: true,
+										iconCls : 'gx-tree-san-icon',
+										id: '0706',
+										leaf : true
+									}, {
+										text: this.farmTxt,
+										checked: true,
+										iconCls : 'gx-tree-san-icon',
+										id: '0707',
+										leaf : true
+									}, {
+										text: this.altroTxt,
+										checked: true,
+										iconCls : 'gx-tree-san-icon',
+										id: '07',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.socTxt,
+								checked: true,
+								iconCls : 'gx-tree-soc-icon',
+								children : [{
+										text: this.anzTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1408',
+										leaf : true
+									}, {
+										text: this.donnTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1404',
+										leaf : true
+									}, {
+										text: this.famTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1401',
+										leaf : true
+									}, {
+										text: this.giovTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1403',
+										leaf : true
+									}, {
+										text: this.disTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1409',
+										leaf : true
+									}, {
+										text: this.dipTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1412',
+										leaf : true
+									}, {
+										text: this.sviluTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1402',
+										leaf : true
+									}, {
+										text: this.patrTxt,
+										checked: true,
+										iconCls : 'gx-tree-soc-icon',
+										id: '1406',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.clutTxt,
+								checked: true,
+								iconCls : 'gx-tree-cul-icon',
+								children : [{
+										text: this.biblTxt,
+										checked: true,
+										iconCls : 'gx-tree-cul-icon',
+										id: '0501',
+										leaf : true
+									}, {
+										text: this.saleTxt,
+										checked: true,
+										iconCls : 'gx-tree-cul-icon',
+										id: '0502',
+										leaf : true
+									}, {
+										text: this.cineTxt,
+										checked: true,
+										iconCls : 'gx-tree-cul-icon',
+										id: '0503',
+										leaf : true
+									}, {
+										text: this.musTxt,
+										checked: true,
+										iconCls : 'gx-tree-cul-icon',
+										id: '0504',
+										leaf : true
+									}, {
+										text: this.teaTxt,
+										checked: true,
+										iconCls : 'gx-tree-cul-icon',
+										id: '0505',
+										leaf : true
+									}, {
+										text: this.assCTxt,
+										checked: true,
+										iconCls : 'gx-tree-cul-icon',
+										id: '0506',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.istrTxt,
+								checked: true,
+								iconCls : 'gx-tree-ist-icon',
+								children : [{
+										text: this.scInTxt,
+										checked: true,
+										iconCls : 'gx-tree-ist-icon',
+										id: '0601',
+										leaf : true
+									}, {
+										text: this.scPrTxt,
+										checked: true,
+										iconCls : 'gx-tree-ist-icon',
+										id: '0602',
+										leaf : true
+									}, {
+										text: this.scSeTxt,
+										checked: true,
+										iconCls : 'gx-tree-ist-icon',
+										id: '0603',
+										leaf : true
+									}, {
+										text: this.scSsTxt,
+										checked: true,
+										iconCls : 'gx-tree-ist-icon',
+										id: '0604',
+										leaf : true
+									}, {
+										text: this.cforTxt,
+										checked: true,
+										iconCls : 'gx-tree-ist-icon',
+										id: '0605',
+										leaf : true
+									}, {
+										text: this.uniTxt,
+										checked: true,
+										iconCls : 'gx-tree-ist-icon',
+										id: '0606',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.spoTxt,
+								checked: true,
+								iconCls : 'gx-tree-spo-icon',
+								children : [{
+										text: this.indTxt,
+										checked: true,
+										iconCls : 'gx-tree-spo-icon',
+										id: '0901',
+										leaf : true
+									}, {
+										text: this.pisTxt,
+										checked: true,
+										iconCls : 'gx-tree-spo-icon',
+										id: '0902',
+										leaf : true
+									}, {
+										text: this.outdTxt,
+										checked: true,
+										iconCls : 'gx-tree-spo-icon',
+										id: '0903',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.giusTxt,
+								checked: true,
+								iconCls : 'gx-tree-giu-icon',
+								children : [{
+										text: this.giusTxt,
+										checked: true,
+										iconCls : 'gx-tree-giu-icon',
+										id: '02',
+										leaf : true
+									}
+								]						
+							}, {
+								text: this.medTxt,
+								checked: true,
+								iconCls : 'gx-tree-med-icon',
+								children : [{
+										text: this.tvTxt,
+										checked: true,
+										iconCls : 'gx-tree-med-icon',
+										id: '1301',
+										leaf : true
+									}, {
+										text: this.giorTxt,
+										checked: true,
+										iconCls : 'gx-tree-med-icon',
+										id: '1302',
+										leaf : true
+									}, {
+										text: this.onlTxt,
+										checked: true,
+										iconCls : 'gx-tree-med-icon',
+										id: '1304',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.finTxt,
+								checked: true,
+								iconCls : 'gx-tree-fin-icon',
+								children : [{
+										text: this.banTxt,
+										checked: true,
+										iconCls : 'gx-tree-fin-icon',
+										id: '1101',
+										leaf : true
+									}, {
+										text: this.uffPTxt,
+										checked: true,
+										iconCls : 'gx-tree-fin-icon',
+										id: '1103',
+										leaf : true
+									}
+								]
+							}, {
+								text: this.chieseTxt,
+								checked: true,
+								iconCls : 'gx-tree-chi-icon',
+								children : [{
+										text: this.chieseTxt,
+										checked: true,
+										iconCls : 'gx-tree-chi-icon',
+										id: '0401',
+										leaf : true
+									}
+								]						
+							}]
+						},
+						rootVisible: false,						
+						listeners: {
+							checkchange: function(node, checked) {
+								if (! checkFlag)
+								{
+									checkFlag = true;
+									if (node.hasChildNodes())
+									{
+										//var isExpanded = node.isExpanded();
+										//node.expand();
+										
+										var i;
+									   for (i = 0; i < node.childNodes.length; i++) { 
+										   node.childNodes[i].ui.toggleCheck(checked);
+									   }
+									   
+									   //if (! isExpanded)
+									   //{
+										//   node.collapse();
+									   //}
+									} else if (checked)  {
+										node.parentNode.ui.toggleCheck(checked);
+									} else {
+										var pNode = node.parentNode;
+										var isNotChecked = true;
+										for (i = 0; i < pNode.childNodes.length; i++) { 
+										   if (pNode.childNodes[i].ui.isChecked())
+										   {
+											   isNotChecked = false;
+											   break;
+										   }
+									    }
+										if (isNotChecked)
+										{
+											pNode.ui.toggleCheck(checked);
+										}
+									}
+									checkFlag = false;
+								}
+							}
+						}
+					}
+					/*,{
 						xtype: 'checkboxgroup',
 						fieldLabel: 'Tipo Servizi',
 						// Arrange checkboxes into two columns, distributed vertically
@@ -305,18 +792,61 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 							inputValue: '09',
 							checked: true
 						}]
-					}]
+					}*/]
 				},				
 				{
+					xtype: "fieldset",
+					title: this.filOrTxt,
+					items:[
+						{
+						xtype: 'timefield',
+						fieldLabel: this.daTxt,
+						labelStyle:'font-weight:bold;',					
+						emptyText: this.orDaTxt,
+						minValue: '7:00',
+						maxValue: '22:00',
+						format: 'H:i',
+						increment: 30,
+						width: 150,
+						id: 'daBox',
+						scope: this					
+						},
+						{
+							xtype: 'timefield',
+							fieldLabel: this.aTxt,
+							labelStyle:'font-weight:bold;',					
+							emptyText: this.orATxt,
+							minValue: '7:00',
+							maxValue: '22:00',
+							format: 'H:i',
+							increment: 30,
+							width: 150,
+							id: 'aBox',
+							scope: this	
+						}, 			
+						{
+							xtype: 'datefield',
+							//anchor: '100%',
+							width: 150,
+							fieldLabel: this.dataTxt,
+							labelStyle:'font-weight:bold;',					
+							name: 'date',
+							id: 'searchDate',
+							format: 'd/m/Y'
+						}
+					]
+				},
+				{
 					xtype: "fieldset",  //RICERCA TESTUALE DESCRIZIONE SERVIZIO
+					title: this.filParChTxt,
 					items:[{
 						xtype: 'combo',
-						fieldLabel: 'Chiave',
+						fieldLabel: this.chiaText,
 						labelStyle:'font-weight:bold;',
 						store: dsServizi,
 						mode: 'remote',
 						displayField: 'descrizione',
-						emptyText: 'Inserisci parola chiave',
+						emptyText: this.inPacText,
 						valueField: 'codice', 
 						width: 250,
 						minChars: 3,
@@ -343,45 +873,11 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 				//lineconfig,
 				{
 					xtype: "fieldset",
-					items:[{
-						xtype: 'timefield',
-						fieldLabel: 'Da',
-						labelStyle:'font-weight:bold;',					
-						emptyText: 'Orario Da',
-						minValue: '7:00',
-						maxValue: '22:00',
-						format: 'H:i',
-						increment: 30,
-						width: 150,
-						id: 'daBox',
-						scope: this					
-					},
-					{
-						xtype: 'timefield',
-						fieldLabel: 'A',
-						labelStyle:'font-weight:bold;',					
-						emptyText: 'Orario A',
-						minValue: '7:00',
-						maxValue: '22:00',
-						format: 'H:i',
-						increment: 30,
-						width: 150,
-						id: 'aBox',
-						scope: this	
-					}, 			
-					{
-						xtype: 'datefield',
-						//anchor: '100%',
-						width: 150,
-						fieldLabel: 'Data',
-						labelStyle:'font-weight:bold;',					
-						name: 'date',
-						id: 'searchDate',
-						format: 'd/m/Y'
-					},
+					title: this.filLuoTxt,
+					items:[
 					{
 						xtype: 'combo',
-						fieldLabel: 'Quartiere',
+						fieldLabel: this.quarTxt,
 						labelStyle:'font-weight:bold;',
 						store: dsQuart,
 						mode: 'local',	
@@ -435,9 +931,12 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 				},						
 				{
 					xtype: 'button',
-					text: 'Aggiorna',
+					text: this.aggiTxt,
 					scope: this,
-					handler: function(){					   
+					handler: function(){				
+					    	
+						//Ext.getCmp('serviziTree').getChecked()
+						
 					   aggiornaServizi();
 						if ((! Ext.getCmp('vieBox').getValue()) && (Ext.getCmp('quartBox').getValue() == 0) &&
 						     (! Ext.getCmp('servDescBox').getValue())) {
@@ -521,7 +1020,7 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 		   }
 		   
 		  
-		   var selectedServices = Ext.getCmp("serviziCheck").getValue();
+		   var selectedServices = Ext.getCmp("serviziTree").getChecked();
 		   var inServices = "";
            /*for(var i=0;i<selectedServices.length;i++){
 				inServices = inServices + "'" + selectedServices[i].inputValue + "'";
@@ -536,12 +1035,14 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
             // ('IN' clause is not supported by OpenLayers.Format.CQL)
             // /////////////////////////////////////////////////////////////////
             for(var i=0; i<selectedServices.length; i++){
-                var inService = "CATE_ROOT_CODE='" + selectedServices[i].inputValue + "'";
-                inServices += inService;
-                
-                if(i+1 < selectedServices.length){
-                    inServices += " OR ";
-                }         
+                if (selectedServices[i].childNodes.length == 0) {
+					var inService = "CATE_CODE_RIF_MAPPA='" + selectedServices[i].id + "'";
+					inServices += inService;
+					
+					if(i+1 < selectedServices.length){
+						inServices += " OR ";
+					}
+				}				
             }
             
 			if (!via) {
@@ -552,7 +1053,7 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 			   "viewparams": "begin_datetime:" + aDate.format("Y-m-d") + " " + startTime + ":00;end_datetime:" + aDate.format("Y-m-d") + " " + endTime + ":00;via_p:" + via + ";quart_p:" + quartiere,
 			   //"cql_filter": "CATE_ROOT_CODE IN (" + inServices + ")"
                 //"cql_filter": inServices == "" ? "INCLUDE" : inServices
-				"cql_filter": inServices == "" ? "CATE_ROOT_CODE=-1" : inServices
+				"cql_filter": inServices == "" ? "CATE_CODE_RIF_MAPPA=-1" : inServices
 		    };
 		   
 		   
@@ -779,6 +1280,13 @@ gxp.plugins.SearchServizioApertura = Ext.extend(gxp.plugins.Tool, {
 		apptarget.mapPanel.map.events.register('preaddlayer', apptarget.mapPanel.map, function (e) {
 		
 			if (e.layer.params && e.layer.params.LAYERS ==  'Cartografia:servizi_apertura'){
+				var nodes = Ext.getCmp("serviziTree").getRootNode().childNodes;
+				var i;
+			    for (i = 0; i < nodes.length; i++) { 
+				   nodes[i].expand();
+				   nodes[i].collapse();
+			    }
+				
 				aggiornaServizi(e.layer);
 			}
 		});				

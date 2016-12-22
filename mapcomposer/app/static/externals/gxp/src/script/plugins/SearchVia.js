@@ -197,12 +197,12 @@ gxp.plugins.SearchVia = Ext.extend(gxp.plugins.Tool, {
 											mask.hide();
 											var obj = Ext.decode(response.responseText);
 											var bounds = obj.bounds;
-											var comProjection = new OpenLayers.Projection("EPSG:25832"); 
-											var googleProjection = new OpenLayers.Projection("EPSG:900913");
+											//var comProjection = new OpenLayers.Projection("EPSG:25832"); 
+											//var googleProjection = new OpenLayers.Projection("EPSG:900913");
 											
 											var comBounds = new OpenLayers.Bounds(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
-											var newBounds = comBounds.transform(comProjection, googleProjection);
-											
+											//var newBounds = comBounds.transform(comProjection, googleProjection);
+											var newBounds = comBounds;
 											//
 											// Add the WMS layer
 											//
